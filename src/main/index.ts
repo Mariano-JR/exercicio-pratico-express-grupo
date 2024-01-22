@@ -1,17 +1,8 @@
 import * as readlineSync from 'readline-sync'
 
-import { RentController } from "./controllers/rent"
+import { rentsController } from "./controllers/rent"
 import { clientsController } from "./controllers/client"
 import { vehiclesController } from "./controllers/vehicle"
-import { rentsRepository } from "../infra/database/repositories/rent"
-import { clientsRepository } from "../infra/database/repositories/client"
-import { vehiclesRepository } from "../infra/database/repositories/vehicle"
-
-const rentController = new RentController(
-    clientsRepository,
-    vehiclesRepository,
-    rentsRepository
-)
 
 function main(): void {
     let welcome = true
@@ -41,10 +32,10 @@ function main(): void {
                 vehiclesController.register()
                 break
             case 4:
-                rentController.register()
+                rentsController.register()
                 break
             case 5:
-                rentController.return()
+                rentsController.return()
                 break
             case 6:
                 vehiclesController.list(true)
@@ -53,7 +44,7 @@ function main(): void {
                 vehiclesController.list(false)
                 break
             case 8:
-                rentController.generateInvoice()
+                rentsController.generateInvoice()
                 break
             case 0:
                 console.log('\nSaindo do sistema\n')
