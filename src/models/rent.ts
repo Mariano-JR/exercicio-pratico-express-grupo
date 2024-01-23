@@ -1,14 +1,14 @@
 import { differenceInHours } from "../main/helpers/date"
 
 export class Rent {
-    public id: number = 0
-    public client_id: number
-    public vehicle_id: number
-    public daily_value: number
-    public start_date: Date
-    public return_date?: Date
-    public amount: number = 0
-    public status: string
+    id: number = 0
+    client_id: number
+    vehicle_id: number
+    daily_value: number
+    start_date: Date
+    return_date?: Date
+    amount: number = 0
+    status: string
 
     constructor(client_id: number, vehicle_id: number, daily_value: number, start_date: Date) {
         this.client_id = client_id
@@ -18,7 +18,7 @@ export class Rent {
         this.status = 'Andamento'
     }
 
-    public static return(rent: Rent, vehicle_type: string): Rent {
+    static return(rent: Rent, vehicle_type: string): Rent {
         rent.return_date = new Date()
         rent.amount = this.calculateAmount(rent, vehicle_type)
         rent.status = 'Finalizado'
