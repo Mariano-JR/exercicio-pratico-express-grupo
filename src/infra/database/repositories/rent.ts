@@ -13,6 +13,11 @@ class RentRepository implements RentRepositoryInterface {
         if (rentals.length > 0) return rentals
     }
 
+    findByVehicleIdAndStatus(vehicle_id: number, status: string): Rent | undefined {
+        const rent = rentalsTable.find((rent) => rent.vehicle_id == vehicle_id && rent.status == status)
+        return rent
+    }
+
     findByClientIdAndStatus(client_id: number, status: string): Rent | undefined {
         const rent = rentalsTable.find((rent) => rent.client_id == client_id && rent.status == status)
         return rent

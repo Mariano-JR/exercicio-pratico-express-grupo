@@ -2,6 +2,8 @@ import { Router } from 'express'
 import { clientsController } from './controllers/client'
 import { vehiclesController } from './controllers/vehicle'
 import { rentsController } from './controllers/rent'
+import { errorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware'
+
 
 export const routes = Router()
 
@@ -15,3 +17,5 @@ routes.post('/clients', clientsController.registerHTTP)
 routes.post('/vehicles', vehiclesController.registerHTTP)
 
 routes.put('/rent/:id', rentsController.returnHTTP)
+
+routes.use(errorHandlerMiddleware.execute);

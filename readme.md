@@ -62,3 +62,4 @@ Inicie o projeto
 - [Mariano Júnior](https://www.github.com/Mariano-JR/)
 - [Silvio Lucas](https://github.com/SilvioLucasDev)
 - [Enei Pereira](https://github.com/eneipereira)
+- [Gabriel Gurgel](https://github.com/Gurgell)
