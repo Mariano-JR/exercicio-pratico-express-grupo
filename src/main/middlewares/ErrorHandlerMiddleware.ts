@@ -7,12 +7,9 @@ class ErrorHandlerMiddleware {
       if (err instanceof AppError) {
         return res.status(err.status).send({ mensagem: err.mensagem });
       }
-
-      console.error(err);
-      return res.status(500).send({ mensagem: 'Erro interno do servidor' });
     }
-
-    next();
+    
+    return res.status(500).send({ mensagem: 'Erro interno do servidor' });
   }
 }
 
