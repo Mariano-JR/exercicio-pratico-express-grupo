@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express'
 import { Vehicle } from "../../models/vehicle";
 import { formatCurrency } from '../helpers/currency';
 import { vehiclesRepository } from '../../infra/database/repositories/vehicle'
-import { registerVehicleService } from '../services/RegisterVechicleService';
+import { registerVehicleService } from '../services/RegisterVehicleService';
 import { listVehiclesService } from '../services/ListVehiclesService';
 
 class VehicleController {
