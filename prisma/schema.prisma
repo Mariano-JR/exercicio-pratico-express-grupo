@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id           String   @id @unique
+  cpf          String   @unique @db.VarChar(11)
+  name         String   @db.VarChar(100)
+  license_type String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  rentals Rental[]
+
+  @@map("clients")
+}
+
+model Rental {
+  id          String    @id @unique
+  start_date  DateTime
+  return_date DateTime?
+  daily_value Decimal   @db.Decimal(8, 2)
+  amount      Decimal   @db.Decimal(8, 2)
+  client_id   String
+  vehicle_id  String
+  status      String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  client  Client  @relation(fields: [client_id], references: [id])
+  vehicle Vehicle @relation(fields: [vehicle_id], references: [id])
+
+  @@map("rentals")
+}
+
+model Vehicle {
+  id           String   @id @unique
+  plate        String   @unique @db.VarChar(10)
+  type         String
+  model        String   @db.VarChar(50)
+  daily_value  Decimal  @db.Decimal(8, 2)
+  license_type String
+  available    Boolean
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  rentals Rental[]
+
+  @@map("vehicles")
+}

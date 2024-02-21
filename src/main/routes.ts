@@ -1,23 +1,19 @@
 import { Router } from 'express'
-import { clientsController } from './controllers/client'
-import { vehiclesController } from './controllers/vehicle'
-import { rentsController } from './controllers/rent'
-import { errorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware'
-import { vehicleMiddleware } from './middlewares/VehicleMiddleware'
-import { clientMiddleware } from './middlewares/ClientMiddleware'
-
+import { clientsController } from '../modules/client/controllers/client'
+import { vehiclesController } from '../modules/vehicle/controllers/vehicle'
+import { rentalController } from '../modules/rental/controllers/rental'
+import { errorHandlerMiddleware } from '../common/middlewares/error-handler-middleware'
 
 export const routes = Router()
 
-routes.get('/clients', clientsController.listHTTP)
-routes.get('/rents/:cpf', rentsController.listRentHTTP)
-routes.get('/vehicles/:license_type/rented', vehiclesController.listHTTPRented)
-routes.get('/vehicles/:license_type/available', vehiclesController.listHTTPAvailable)
+routes.get('/clients', clientsController.list)
+routes.post('/clients', clientsController.register)
 
-routes.post('/rents', rentsController.registerHTTP)
-routes.post('/clients', clientMiddleware.validateNewClient, clientsController.registerHTTP)
-routes.post('/vehicles', vehicleMiddleware.validateNewVehicle, vehiclesController.registerHTTP)
+routes.get('/vehicles', vehiclesController.list)
+routes.post('/vehicles', vehiclesController.register)
 
-routes.put('/rent/:id', rentsController.returnHTTP)
+routes.get('/rentals', rentalController.list)
+routes.post('/rentals', rentalController.register)
+routes.patch('/rentals/:id', rentalController.return)
 
 routes.use(errorHandlerMiddleware.execute);
