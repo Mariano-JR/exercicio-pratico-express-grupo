@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { clientsController } from '../modules/client/controllers/client'
 import { vehiclesController } from '../modules/vehicle/controllers/vehicle'
 import { rentalController } from '../modules/rental/controllers/rental'
-import { errorHandlerMiddleware } from '../common/middlewares/error-handler-middleware'
+import { errorHandlerMiddleware } from '../common/middlewares/error-handler'
 
 export const routes = Router()
 
