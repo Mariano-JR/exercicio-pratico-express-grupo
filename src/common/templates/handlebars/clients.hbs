@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora Ada</title>
+    <style>
+      table {
+          width:  100%;
+          border-collapse: collapse;
+          margin-bottom:  20px;
+      }
+      th, td {
+          border:  1px solid #ddd;
+          padding:  8px;
+      }
+      th {
+          background-color: #4CAF50;
+          color: white;
+      }
+      tr:nth-child(even) {
+          background-color: #f2f2f2;
+      }
+      h1 {
+          text-align: center;
+          margin-bottom:  20px;
+      }
+    </style>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Tipo de Licença</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>{{cpf}}</td>
+                <td>{{licenseType}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>

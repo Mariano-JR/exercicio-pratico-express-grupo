@@ -1,57 +1,30 @@
-import * as readlineSync from 'readline-sync'
+import dotenv from 'dotenv';
+dotenv.config();
 
-import { rentsController } from "./controllers/rent"
-import { clientsController } from "./controllers/client"
-import { vehiclesController } from "./controllers/vehicle"
+import express from 'express'
+import cors from 'cors';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import expressRateLimit from 'express-rate-limit';
+import { routes } from './routes'
 
-function main(): void {
-    let welcome = true
-    let message
-    let option
+export const app = express();
 
-    do {
-        if (welcome) {
-            welcome = false
-            message = '\n --------------------------------------------------------------------------------------------------------------\n|                                      Bem Vindo ao sistema da Unidos SME                                      |\n --------------------------------------------------------------------------------------------------------------\n\nPara prosseguir, escolha uma das opcoes abaixo:\n'
-        } else {
-            message = '\nEscola outra opcao para continuar:\n'
-        }
+app.use(cors());
+app.use(helmet());
+app.use(morgan('dev'));
+app.use(express.json());
 
-        option = +readlineSync.question(
-            message + '\n1 - Cadastrar Cliente\n2 - Listar Clientes\n3 - Cadastrar Veiculo\n4 - Alugar Veiculo\n5 - Devolver Veiculo\n6 - Listar Veiculos Disponiveis\n7 - Listar Veiculos Alugados\n8 - Mostrar Fatura do Cliente\n0 - Sair do sistema\n\n'
-        )
+const rateLimitMs = Number(process.env.RATE_LIMIT_MS)
+const rateLimitMin = rateLimitMs / 60000
+const rateLimitMax = Number(process.env.RATE_LIMIT_MAX)
 
-        switch (option) {
-            case 1:
-                clientsController.register()
-                break
-            case 2:
-                clientsController.list()
-                break
-            case 3:
-                vehiclesController.register()
-                break
-            case 4:
-                rentsController.register()
-                break
-            case 5:
-                rentsController.return()
-                break
-            case 6:
-                vehiclesController.list(true)
-                break
-            case 7:
-                vehiclesController.list(false)
-                break
-            case 8:
-                rentsController.generateInvoice()
-                break
-            case 0:
-                console.log('\nSaindo do sistema\n')
-                break
-            default:
-                console.log('\nOpcao invalida\n')
-        }
-    } while (option != 0)
-}
-main()
+app.use(expressRateLimit({
+  windowMs: rateLimitMs,
+  max: rateLimitMax,
+  message: `Você excedeu o limite de ${rateLimitMax} requisições por minuto, volte novamente em ${rateLimitMin} ${rateLimitMin == 1 ? 'minuto' : 'minutos'}!`
+}));
+
+app.use(routes);
+
+app.listen(process.env.PORT, () => console.log(`Servidor rodando em http://localhost:${process.env.PORT}`))
